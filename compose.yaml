@@ -1,0 +1,30 @@
+services:
+  master:
+    image: nginx-master:1.0
+    ports:
+      - "80:80"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      worker:
+        condition: service_started
+
+  worker:
+    image: nginx-worker:1.0
+    ports:
+      - "80"
+    networks:
+      - backend
+    volumes:
+      - ./website:/var/www/html/website
+    deploy:
+      mode: replicated
+      replicas: 4
+
+networks:
+  frontend:
+    driver: bridge ## default driver type
+  backend:
+    internal: true
+    driver: bridge ## default driver type

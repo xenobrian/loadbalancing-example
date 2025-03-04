@@ -1,0 +1,3 @@
+FROM nginx:alpine
+WORKDIR /etc/nginx
+COPY ./worker.conf ./nginx.conf
